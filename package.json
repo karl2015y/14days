@@ -10,6 +10,7 @@
     "@quasar/extras": "^1.12.0",
     "pinia": "^2.0.12",
     "quasar": "^2.3.2",
+    "safe-await": "^2.0.0",
     "vue": "^3.2.16",
     "vue-router": "^4.0.14"
   },
