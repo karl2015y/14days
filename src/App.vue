@@ -1,6 +1,7 @@
 <template>
-  <div></div>
-  <q-btn icon="home">安安</q-btn>
+  <div class="flex">
+    <q-btn icon="home" class="w-40">安安</q-btn>
+  </div>
 </template>
 
 <script setup lang="ts">
