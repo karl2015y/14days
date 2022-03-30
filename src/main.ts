@@ -1,5 +1,7 @@
 import { createApp } from 'vue'
+import router from './router/router'
 import { createPinia } from 'pinia'
+
 import { Quasar } from 'quasar'
 import quasarLang from 'quasar/lang/zh-TW'
 
@@ -19,5 +21,6 @@ createApp(App)
     lang: quasarLang,
   })
   .use(createPinia())
+  .use(router)
   .mount('#app')
 
