@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
-import Page from '../views/Page.vue'
-
 export interface RouteMeta {
   name: string;
 }
@@ -17,16 +15,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: `/home`,
     name: 'home',
-    component: Page
+    component: () => import('../views/TheHome.vue')
   },
-
-  // {
-  //   path: `/standby`,
-  //   name: RouteName.STANDNY,
-  //   component: require('../views/page-procedure-standby.vue').default,
-  //   meta: {},
-  // },
-
 
   {
     path: '/:pathMatch(.*)*',
