@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">我是頁面</div>
+  <div class="flex"> 我是頁面 </div>
 </template>
 
 <script setup lang="ts">
