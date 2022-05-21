@@ -6,3 +6,8 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+declare interface ImportMetaEnv {
+  /** 版本號 */
+  readonly PACKAGE_VERSION: string;
+}
