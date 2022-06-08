@@ -15,8 +15,9 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: `/home`,
     name: 'home',
-    component: () => import('../views/the-home.vue')
+    component: () => import('../views/Home.vue')
   },
+ 
 
   {
     path: '/:pathMatch(.*)*',
@@ -26,7 +27,20 @@ const routes: Array<RouteRecordRaw> = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (to.hash) {
+          resolve({
+            el: to.hash,
+            behavior: 'smooth',
+          })
+
+        }
+      }, 1000)
+    })
+  },
 })
 
 export default router

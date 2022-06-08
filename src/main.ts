@@ -13,10 +13,8 @@ import '@quasar/extras/material-icons/material-icons.css'
 import 'quasar/src/css/index.sass'
 import App from './App.vue'
 
-// 自訂樣式
-import './style/animate.sass'
 
-import './index.css'
+// import './index.css'
 
 
 createApp(App)
