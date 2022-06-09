@@ -3,7 +3,9 @@
         @click="swiper.slideNext()"
         class="index-banner-swiper-button-next swiper-button-next"
     >
-        <div class="carousel-control-next-icon"></div>
+        <slot>
+            <div class="carousel-control-next-icon"></div>
+        </slot>
     </div>
 </template>
 

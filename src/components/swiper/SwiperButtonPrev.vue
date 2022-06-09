@@ -3,7 +3,9 @@
         @click="swiper.slidePrev()"
         class="index-banner-swiper-button-prev swiper-button-prev"
     >
-        <div class="carousel-control-prev-icon"></div>
+        <slot>
+            <div class="carousel-control-prev-icon"></div>
+        </slot>
     </div>
 </template>
 

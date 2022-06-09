@@ -168,6 +168,12 @@ const menuArray = ref([
                 label: '新北防疫旅館',
                 link: '/home#newtaipei',
             }, {
+                label: '桃園防疫旅館',
+                link: '/home#taoyuan',
+            },{
+                label: '新竹防疫旅館',
+                link: '/home#hsinchu',
+            },{
                 label: '台中防疫旅館',
                 link: '/home#taicheng',
             }, {
@@ -181,12 +187,12 @@ const menuArray = ref([
     },
     {
         label: '防疫全攻略',
-        link: '/home',
+        link: '/Articles',
         children: []
     },
     {
         label: '最新消息',
-        link: '/home',
+        link: '/Blogs',
         children: []
     },
     {
@@ -196,7 +202,7 @@ const menuArray = ref([
     },
     {
         label: '聯絡我們',
-        link: '/home',
+        link: '/ContactUs',
         children: []
     },
 ])

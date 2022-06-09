@@ -35,6 +35,8 @@
 </template>
 
 <script setup lang="ts">
+import { ArticleType } from '@/types/post.type';
+
 // props
 interface Props {
     title: string;
@@ -42,14 +44,7 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-// type
-type ArticleType = {
-    image: string,
-    time: string,
-    title: string,
-    text: string,
-    link: string
-}
+
 </script>
 
 <style scoped>
