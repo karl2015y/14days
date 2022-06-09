@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import AdminRouter from './admin';
+import UserRouter from './user';
 
 export interface RouteMeta {
   name: string;
@@ -12,46 +14,11 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
 
-  {
-    path: `/home`,
-    name: 'home',
-    component: () => import('../views/Home.vue')
-  }, {
-    path: `/hotel/:id`,
-    name: 'hotelDetails',
-    component: () => import('../views/Hotel.vue')
-  },
-  {
-    path: `/Q&A`,
-    name: 'QandA',
-    component: () => import('../views/QandA.vue')
-  },
-  {
-    path: `/ContactUs`,
-    name: 'ContactUs',
-    component: () => import('../views/ContactUs.vue')
-  },
-  {
-    path: `/Blogs`,
-    name: 'Blogs',
-    component: () => import('../views/Post.vue')
-  },
-  {
-    path: `/Blogs/:id`,
-    name: 'BlogText',
-    component: () => import('../views/PostText.vue')
-  },
-  {
-    path: `/Articles/:id`,
-    name: 'ArticleText',
-    component: () => import('../views/PostText.vue')
-  },
 
-  {
-    path: `/Articles`,
-    name: 'Articles',
-    component: () => import('../views/Post.vue')
-  },
+
+
+  UserRouter.routes,
+  AdminRouter.routes,
 
   {
     path: '/:pathMatch(.*)*',
