@@ -153,7 +153,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useScriptTag } from '@vueuse/core'
-import PostHotList from "@/components/PostHotList.vue"
+import PostHotList from "@/components/user/PostHotList.vue"
 useScriptTag("https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v14.0")
 const addFS = ref(1.1)
 

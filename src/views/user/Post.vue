@@ -19,8 +19,8 @@
 </template>
 
 <script setup lang="ts">
-import PostBoardSlider from '@/components/PostBoardSlider.vue';
-import PostTypeTab from '@/components/PostTypeTab.vue'
+import PostBoardSlider from '@/components/user/PostBoardSlider.vue';
+import PostTypeTab from '@/components/user/PostTypeTab.vue'
 import { ref } from 'vue';
 const postClassArray = ref([
     {

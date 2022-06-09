@@ -103,7 +103,7 @@
 </template>
 
 <script setup lang="ts">
-import HotelRooms from '@/components/HotelRooms.vue'
+import HotelRooms from '@/components/user/HotelRooms.vue'
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import "swiper/css/free-mode"
@@ -118,7 +118,7 @@ import { useWindowSize } from '@vueuse/core'
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 
-import HotelLoading from '@/components/HotelLoading.vue';
+import HotelLoading from '@/components/user/HotelLoading.vue';
 import { useFilter } from '@/composables/filters';
 import { hotelDataType } from '@/types/hotel.type';
 

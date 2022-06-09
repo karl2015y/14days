@@ -14,8 +14,8 @@ export default {
 }
 </script>
 <script setup lang="ts">
-import PageHeader from '@/components/PageHeader.vue'
-import PageFooter from '@/components/PageFooter.vue'
+import PageHeader from '@/components/user/PageHeader.vue'
+import PageFooter from '@/components/user/PageFooter.vue'
 
 </script>
 

@@ -80,8 +80,8 @@
 import { EffectFade } from 'swiper';
 
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import SwiperButtonPrev from '@/components/swiper/SwiperButtonPrev.vue'
-import SwiperButtonNext from '@/components/swiper/SwiperButtonNext.vue'
+import SwiperButtonPrev from '@/components/user/swiper/SwiperButtonPrev.vue'
+import SwiperButtonNext from '@/components/user/swiper/SwiperButtonNext.vue'
 import SwiperIndexCtrl from './swiper/SwiperIndexCtrl.vue';
 import { ref } from 'vue';
 import 'swiper/css';

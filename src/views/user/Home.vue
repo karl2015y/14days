@@ -20,14 +20,14 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import HomeBanner from '@/components/HomeBanner.vue'
-import HomeLayout from '@/components/HomeLayout.vue'
-import HomeHotCityRooms from '@/components/HomeHotCityRooms.vue';
-import HomeFaq from '@/components/HomeFaq.vue';
-import HomeAbout from '@/components/HomeAbout.vue';
-import HomeCare from '@/components/HomeCare.vue';
-import HomeFocus from '@/components/HomeFocus.vue';
-import HomeBlog from '@/components/HomeBlog.vue'
+import HomeBanner from '@/components/user/HomeBanner.vue'
+import HomeLayout from '@/components/user/HomeLayout.vue'
+import HomeHotCityRooms from '@/components/user/HomeHotCityRooms.vue';
+import HomeFaq from '@/components/user/HomeFaq.vue';
+import HomeAbout from '@/components/user/HomeAbout.vue';
+import HomeCare from '@/components/user/HomeCare.vue';
+import HomeFocus from '@/components/user/HomeFocus.vue';
+import HomeBlog from '@/components/user/HomeBlog.vue'
 interface Props {
   label?: string;
 }
