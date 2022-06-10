@@ -34,26 +34,22 @@ const routes: RouteRecordRaw =
             component: () => import('@/views/user/ContactUs.vue')
         },
         {
-            path: `Blogs`,
-            name: 'Blogs',
+            path: `news`,
+            name: 'news',
             component: () => import('@/views/user/Post.vue')
         },
         {
-            path: `Blogs/:id`,
-            name: 'BlogText',
-            component: () => import('@/views/user/PostText.vue')
+            path: `article`,
+            name: 'article',
+            component: () => import('@/views/user/Post.vue')
         },
         {
-            path: `Articles/:id`,
-            name: 'ArticleText',
+            path: `posts/:id`,
+            name: 'PostText',
             component: () => import('@/views/user/PostText.vue')
         },
 
-        {
-            path: `Articles`,
-            name: 'Articles',
-            component: () => import('@/views/user/Post.vue')
-        },
+       
     ]
 };
 

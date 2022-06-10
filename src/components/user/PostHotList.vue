@@ -3,7 +3,7 @@
         <div class="article-class article-class-line">熱門文章</div>
         <ul class="articleText-right-list">
             <li
-                v-for="(post, index) in postStore.top10Post"
+                v-for="(post, index) in postStore.hotPost"
                 class="articleText-right-item"
             >
                 <a

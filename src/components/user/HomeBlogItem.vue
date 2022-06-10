@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="props.articles.length">
         <div class="blogBigTitle">{{ props.title }}</div>
         <ul class="blogList">
             <li
@@ -11,15 +11,15 @@
                     :src="item.image"
                     class="blogImg"
                 >
-                <p class="blogDate">【{{ item.time }}}更新】</p>
+                <p class="blogDate">【{{ item.createTime }}更新】</p>
                 <p class="blogTitle">{{ item.title }}</p>
                 <p
                     class="blogText"
                     v-text="item.text"
                 />
 
-                <a
-                    :href="item.link"
+                <router-link
+                    :to="{ name: 'PostText', params: { id: `${item.postId}` } }"
                     class="blogMore"
                 >
                     <p class="blogMoreText">Read more...</p>
@@ -27,7 +27,8 @@
                         alt=""
                         src="https://i.ibb.co/0Q99hyB/Group-103.png"
                     >
-                </a>
+                </router-link>
+
             </li>
 
         </ul>

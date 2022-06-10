@@ -10,7 +10,7 @@
 
 <script lang="ts">
 export default {
-    name: 'AdminLayout',
+    name: 'UserLayout',
 }
 </script>
 <script setup lang="ts">

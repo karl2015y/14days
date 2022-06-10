@@ -22,7 +22,7 @@
                 <div class="article-class-content-item-box">
                     <div class="article-class-content-item-pic"><img
                             :alt="item.title"
-                            :src="item.mainImage"
+                            :src="item.image"
                         >
                     </div>
                     <div class="article-class-content-item-txt">
@@ -36,13 +36,21 @@
                         </p>
                         <p class="article-class-content-item-footer"> <span
                                 class="article-class-content-item-footer-date"
-                            >{{ item.createTime }}</span><a
-                                href=""
+                            >{{ item.createTime }}</span>
+
+                            <router-link
+                                :to="{ name: 'PostText', params: { id: `${item.postId}` } }"
                                 class="article-class-content-item-footer-move"
-                            > <span>閱讀更多 </span><img
+                            >
+                                <span>閱讀更多 </span>
+                                <img
                                     alt=""
                                     src="https://ppt.cc/fQWIzx@.png"
-                                ></a></p>
+                                >
+                            </router-link>
+
+
+                        </p>
                     </div>
                 </div>
             </li>
@@ -66,7 +74,7 @@
                     <div class="article-class-content-item-box">
                         <div class="article-class-content-item-pic"><img
                                 :alt="item.title"
-                                :src="item.mainImage"
+                                :src="item.image"
                             >
                         </div>
                         <div class="article-class-content-item-txt">
@@ -97,30 +105,14 @@
     </div>
 </template>
 
-<script setup lang="ts">import { computed, ref } from 'vue';
+<script setup lang="ts">import { ArticleType, PostClassType, postTypeType } from '@/types/post.type';
+import { computed, ref } from 'vue';
 
 // props
 interface Props {
-    postClassObj: {
-        id: number,
-        name: string,
-    };
-    postTypeArray: Array<{
-        id: number,
-        name: string,
-    }>
-    postArray?: Array<{
-        categoryId: number,
-        TypeId: number,
-        ClassId: number,
-        title: string,
-        createTime: string,
-        viewer: number,
-        mainImage: string,
-        foreword: string,
-        text: string,
-        epilogue: string,
-    }>
+    postClassObj: PostClassType;
+    postTypeArray: Array<postTypeType>
+    postArray?: Array<ArticleType>
 }
 const props = defineProps<Props>()
 
@@ -128,7 +120,7 @@ const props = defineProps<Props>()
 const showMore = ref(false)
 const focusPostType = ref<string>(props.postTypeArray[0].name)
 const focusPostTypeId = computed(() => (props.postTypeArray.find((item) => item.name == focusPostType.value)?.id))
-const postArray = computed(() => (props.postArray?.filter((item) => (item.TypeId == focusPostTypeId.value))))
+const postArray = computed(() => (props.postArray?.filter((item) => (item.typeId == focusPostTypeId.value))))
 </script>
 
 <style scoped>

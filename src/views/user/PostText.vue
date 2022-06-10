@@ -1,7 +1,7 @@
 <template>
     <div id="fb-root"></div>
     <div class="wrap">
-        <div class="content articleText-Wrap">
+        <div v-if="computedPostDatum" class="content articleText-Wrap">
             <ul class="breadcrumbs">
                 <li class="breadcrumbs-item"><a href="">首頁</a></li>
                 <li class="breadcrumbs-item"><a href="">{{ computedPostDatum.categoryText ?? '' }}</a></li>
@@ -23,8 +23,8 @@
                 <!-- 圖 -->
                 <div class="articleText-pic">
                     <img
-                        :alt="computedPostDatum.mainImage"
-                        :src="computedPostDatum.mainImage"
+                        :alt="computedPostDatum.text"
+                        :src="computedPostDatum.image"
                     >
                 </div>
                 <!-- 文章 -->
@@ -143,8 +143,8 @@
 
                 </div>
             </div>
-            <post-hot-list class="articleText-right"/>
-          
+            <post-hot-list class="articleText-right" />
+
 
         </div>
     </div>
@@ -154,62 +154,27 @@
 import { computed, ref } from 'vue';
 import { useScriptTag } from '@vueuse/core'
 import PostHotList from "@/components/user/PostHotList.vue"
+import { usePostStore } from '@/stores/post.store';
+import { useRoute } from 'vue-router';
+import { ArticleType } from '@/types/post.type';
 useScriptTag("https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v14.0")
 const addFS = ref(1.1)
 
-const postCategoryArray = ref([
-    {
-        id: 1,
-        name: "防疫全攻略"
-    }, {
-        id: 2,
-        name: "最新消息"
-    },
-])
-const postClassArray = ref([
-    {
-        id: 1,
-        name: "最心文章"
-    }, {
-        id: 2,
-        name: "熱門議題"
-    },
-])
-const postTypeArray = ref([
-    {
-        id: 1,
-        name: '優惠資訊'
-    }, {
-        id: 2,
-        name: '防疫資訊'
-    }, {
-        id: 3,
-        name: '營養健康'
-    }, {
-        id: 4,
-        name: '旅遊資訊'
-    },
-])
+const postStore = usePostStore()
 
-const postDatum = ref({
-    showOnBooard: true,
-    categoryId: 1,
-    TypeId: 1,
-    ClassId: 1,
-    title: "1機場搭防疫計程車我們付費，文章標題第二列",
-    createTime: "2022/06/08",
-    viewer: 300,
-    mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-    foreword: "前言",
-    text: "內文",
-    epilogue: "結語",
-})
+const route = useRoute()
+
+const postDatum = computed<ArticleType | undefined>(() => (postStore.postById(Number(route.params.id) ?? 0)))
+console.log(postStore.postById(Number(route.params.id) ?? 0));
 
 const computedPostDatum = computed(() => {
-    const categoryText = postCategoryArray.value.find((item => (item.id == postDatum.value.categoryId)))?.name
-    const typeText = postTypeArray.value.find((item => (item.id == postDatum.value.TypeId)))?.name
-    const classText = postClassArray.value.find((item => (item.id == postDatum.value.ClassId)))?.name
-    return { categoryText, typeText, classText, ...(postDatum.value) }
+    if (postDatum.value) {
+        const categoryText = postStore.postCategoryArray.find((item => (item.id == postDatum.value?.categoryId)))?.name
+        const typeText = postStore.postTypeArray.find((item => (item.id == postDatum.value?.typeId)))?.name
+        const classText = postStore.postClassArray.find((item => (item.id == postDatum.value?.classId)))?.name
+        return { categoryText, typeText, classText, ...(postDatum.value) }
+    }
+
 })
 
 

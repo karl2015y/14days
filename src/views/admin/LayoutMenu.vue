@@ -105,7 +105,6 @@
                 class="flex justify-center items-center h-[85vh]"
             >
                 這裡是後台管理，點擊旁邊的選項開始工作吧
-                {{ adminRoutes }}
             </div>
             <router-view v-else />
         </q-page-container>

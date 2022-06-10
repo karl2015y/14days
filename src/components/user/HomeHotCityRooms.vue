@@ -3,10 +3,7 @@
         <p class="title">熱門城市選擇</p>
         <ul class="hot_list">
             <template v-for="city in hotCities">
-                <li
-                    v-if="city.rooms.length > 0"
-                    class="hot_item"
-                >
+                <li class="hot_item">
                     <a :href="`#${city.label}`"><img
                             :alt="`${city.name}城市縮圖`"
                             :src="city.image"
@@ -124,7 +121,10 @@
 
                 </template>
 
-                <div v-else class="about text-grey">
+                <div
+                    v-else
+                    class="about text-grey"
+                >
                     暫無資料
                 </div>
 
@@ -164,7 +164,8 @@ import axios from 'axios'
 import HomeHotCityRoomsLoading from './HomeHotCityRoomsLoading.vue';
 import { useFilter } from '@/composables/filters';
 import { hotelDataType, hotelFilterType } from '@/types/hotel.type';
-const { toLS } = useFilter()
+
+const { toLS, formatDate, addDays } = useFilter()
 
 const hotCities = ref([
     {
@@ -434,19 +435,20 @@ const hotelFilterArray = ref<Array<hotelFilterType>>([
 const loading = ref(true)
 
 const apiUrl = computed(() => {
-    let baseUrl = "https://ota-api.tourbobo.com/official/hotels?"
+    let baseUrl = `https://ota-api.tourbobo.com/ota/hotels?adults=1&children=0&check_in=${formatDate(addDays(30))}&check_out=${formatDate(addDays(38))}`
     hotelFilterArray.value.forEach(item => {
-        baseUrl += `hotel_id[]=${item.hotelId}&`
+        baseUrl += `&hotel_id[]=${item.hotelId}`
     })
     return baseUrl
 })
 
 const getData = async () => {
     loading.value = true
+    console.log(apiUrl.value);
 
     const response = await axios.get(apiUrl.value)
 
-    let _data = response.data
+    let _data = response.data.data
 
     _data = _data.map((item: hotelDataType) => {
         const kf = hotelFilterArray.value.find(hf => hf.hotelId == item.hotel_id)

@@ -187,12 +187,12 @@ const menuArray = ref([
     },
     {
         label: '防疫全攻略',
-        link: '/Articles',
+        link: '/article',
         children: []
     },
     {
         label: '最新消息',
-        link: '/Blogs',
+        link: '/news',
         children: []
     },
     {

@@ -1,300 +1,349 @@
+import { ArticleType, PostCategoryType, PostClassType, postTypeType } from '@/types/post.type'
 import { defineStore } from 'pinia'
 
+
+const getPost = (postArray: Array<ArticleType>, id: number) => {
+    console.log('getPost');
+    
+    return postArray.find(((post: ArticleType) => (post.postId === id)))
+}
+const getCategoryPosts = (postArray: Array<ArticleType>, id: number) => {
+    return postArray.filter(((post: ArticleType) => (post.categoryId === id)))
+}
+const getShowOnHomePosts = (postArray: Array<ArticleType>) => {
+    return postArray.filter(((post: ArticleType) => (post.showOnHome)))
+}
+
+const getSortByViewerPosts = (postArray: Array<ArticleType>, postCount: null | number = null) => {
+    if (postCount) {
+        return postArray.sort((a, b) => (b.viewer - a.viewer)).slice(0, postCount)
+    }
+    return postArray.sort((a, b) => (b.viewer - a.viewer))
+
+}
+
+
 export const usePostStore = defineStore('post', {
-  state: () => ({
-    postArray: [
-      {
-          showOnBooard:true,
-          categoryId: 1,
-          TypeId: 1,
-          ClassId: 1,
-          title: "1機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 7452,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "前言",
-          text: "內文",
-          epilogue: "結語",
-      }, {
-          showOnBooard:true,
-          categoryId: 1,
-          TypeId: 1,
-          ClassId: 2,
-          title: "2機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 456,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "",
-          text: "內文",
-          epilogue: "結語",
-      }, {
-          showOnBooard:true,
-          categoryId: 1,
-          TypeId: 2,
-          ClassId: 1,
-          title: "3機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 897412,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "",
-          text: "",
-          epilogue: "結語",
-      }, {
-          showOnBooard:true,
-          categoryId: 1,
-          TypeId: 2,
-          ClassId: 2,
-          title: "4機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 123,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "",
-          text: "",
-          epilogue: "",
-      }, {
-          showOnBooard:true,
-          categoryId: 1,
-          TypeId: 3,
-          ClassId: 1,
-          title: "5機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 9085,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "前言",
-          text: "內文",
-          epilogue: "結語",
-      }, {
-          showOnBooard:true,
-          categoryId: 1,
-          TypeId: 3,
-          ClassId: 2,
-          title: "6機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 186461,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "前言",
-          text: "內文",
-          epilogue: "結語",
-      }, {
-          showOnBooard:true,
-          categoryId: 1,
-          TypeId: 4,
-          ClassId: 1,
-          title: "7機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 21651,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "前言",
-          text: "內文",
-          epilogue: "結語",
-      }, {
-          showOnBooard:true,
-          categoryId: 1,
-          TypeId: 4,
-          ClassId: 2,
-          title: "8機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 4654321,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "前言",
-          text: "內文",
-          epilogue: "結語",
-      }, {
-          showOnBooard:true,
-          categoryId: 1,
-          TypeId: 1,
-          ClassId: 1,
-          title: "9機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 546231,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "前言",
-          text: "內文",
-          epilogue: "結語",
-      }, {
-          showOnBooard:true,
-          categoryId: 1,
-          TypeId: 1,
-          ClassId: 2,
-          title: "10機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 456123,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "",
-          text: "內文",
-          epilogue: "結語",
-      }, {
-          showOnBooard:false,
-          categoryId: 1,
-          TypeId: 2,
-          ClassId: 1,
-          title: "11機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 45610,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "",
-          text: "",
-          epilogue: "結語",
-      }, {
-          showOnBooard:false,
-          categoryId: 1,
-          TypeId: 2,
-          ClassId: 2,
-          title: "12機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 654123,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "",
-          text: "",
-          epilogue: "",
-      }, {
-          showOnBooard:false,
-          categoryId: 1,
-          TypeId: 3,
-          ClassId: 1,
-          title: "13機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 56410,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "前言",
-          text: "內文",
-          epilogue: "結語",
-      }, {
-          showOnBooard:false,
-          categoryId: 1,
-          TypeId: 3,
-          ClassId: 2,
-          title: "14機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 3210,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "前言",
-          text: "內文",
-          epilogue: "結語",
-      }, {
-          showOnBooard:false,
-          categoryId: 1,
-          TypeId: 4,
-          ClassId: 1,
-          title: "15機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 4561,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "前言",
-          text: "內文",
-          epilogue: "結語",
-      }, {
-          showOnBooard:false,
-          categoryId: 1,
-          TypeId: 4,
-          ClassId: 2,
-          title: "16機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 56412,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "前言",
-          text: "內文",
-          epilogue: "結語",
-      }, {
-          showOnBooard:false,
-          categoryId: 1,
-          TypeId: 1,
-          ClassId: 1,
-          title: "17機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 561320,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "前言",
-          text: "內文",
-          epilogue: "結語",
-      }, {
-          showOnBooard:false,
-          categoryId: 1,
-          TypeId: 1,
-          ClassId: 2,
-          title: "18機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 65132,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "",
-          text: "內文",
-          epilogue: "結語",
-      }, {
-          showOnBooard:false,
-          categoryId: 1,
-          TypeId: 2,
-          ClassId: 1,
-          title: "19機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 561320,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "",
-          text: "",
-          epilogue: "結語",
-      }, {
-          showOnBooard:false,
-          categoryId: 1,
-          TypeId: 2,
-          ClassId: 2,
-          title: "20機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 541,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "",
-          text: "",
-          epilogue: "",
-      }, {
-          showOnBooard:false,
-          categoryId: 1,
-          TypeId: 3,
-          ClassId: 1,
-          title: "21機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 231,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "前言",
-          text: "內文",
-          epilogue: "結語",
-      }, {
-          showOnBooard:false,
-          categoryId: 1,
-          TypeId: 3,
-          ClassId: 2,
-          title: "22機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 23100,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "前言",
-          text: "內文",
-          epilogue: "結語",
-      }, {
-          showOnBooard:false,
-          categoryId: 1,
-          TypeId: 4,
-          ClassId: 1,
-          title: "23機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 2310,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "前言",
-          text: "內文",
-          epilogue: "結語",
-      }, {
-          showOnBooard:false,
-          categoryId: 1,
-          TypeId: 4,
-          ClassId: 2,
-          title: "24機場搭防疫計程車我們付費，文章標題第二列",
-          createTime: "2022/06/08",
-          viewer: 3054120,
-          mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-          foreword: "前言",
-          text: "內文",
-          epilogue: "結語",
-      }
-  ]
-  }),
-  getters:{
-    top10Post: (state)=>(state.postArray.sort((a,b)=>(b.viewer-a.viewer))).slice(0,10)
-  }
+    state: () => ({
+        postCategoryArray: <Array<PostCategoryType>>[
+            {
+                id: 1,
+                key: "article",
+                name: "防疫全攻略"
+            },
+            {
+                id: 2,
+                key: "news",
+                name: "最新消息"
+            },
+        ],
+        postClassArray: <Array<PostClassType>>[
+            {
+                id: 1,
+                name: "最心文章"
+            }, {
+                id: 2,
+                name: "熱門議題"
+            },
+        ],
+        postTypeArray: <Array<postTypeType>>[
+            {
+                id: 1,
+                name: '優惠資訊'
+            }, {
+                id: 2,
+                name: '防疫資訊'
+            }, {
+                id: 3,
+                name: '營養健康'
+            }, {
+                id: 4,
+                name: '旅遊資訊'
+            },
+        ],
+        postArray: <Array<ArticleType>>[
+            {
+                postId: 1,
+                categoryId: 1,
+                classId: 1,
+                typeId: 1,
+                showOnBoard: true,
+                showOnHome: true,
+                title: "機場搭防疫計程車我們付費，文章標題第二列",
+                image: "https://i.ibb.co/fYBVPpF/image-7.png",
+                viewer: 300,
+                foreword: "前言",
+                text: "內文",
+                epilogue: "結語",
+                createTime: "2022/06/08",
+            },
+            {
+                postId: 2,
+                categoryId: 1,
+                classId: 1,
+                typeId: 2,
+                showOnBoard: true,
+                showOnHome: true,
+                title: "機場搭防疫計程車我們付費，文章標題第二列",
+                image: "https://i.ibb.co/fYBVPpF/image-7.png",
+                viewer: 300,
+                foreword: "前言",
+                text: "內文",
+                epilogue: "結語",
+                createTime: "2022/06/08",
+            },
+            {
+                postId: 3,
+                categoryId: 1,
+                classId: 1,
+                typeId: 3,
+                showOnBoard: true,
+                showOnHome: true,
+                title: "機場搭防疫計程車我們付費，文章標題第二列",
+                image: "https://i.ibb.co/fYBVPpF/image-7.png",
+                viewer: 300,
+                foreword: "前言",
+                text: "內文",
+                epilogue: "結語",
+                createTime: "2022/06/08",
+            },
+            {
+                postId: 4,
+                categoryId: 1,
+                classId: 1,
+                typeId: 4,
+                showOnBoard: true,
+                showOnHome: false,
+                title: "機場搭防疫計程車我們付費，文章標題第二列",
+                image: "https://i.ibb.co/fYBVPpF/image-7.png",
+                viewer: 300,
+                foreword: "前言",
+                text: "內文",
+                epilogue: "結語",
+                createTime: "2022/06/08",
+            },
+            {
+                postId: 5,
+                categoryId: 1,
+                classId: 2,
+                typeId: 1,
+                showOnBoard: true,
+                showOnHome: false,
+                title: "機場搭防疫計程車我們付費，文章標題第二列",
+                image: "https://i.ibb.co/fYBVPpF/image-7.png",
+                viewer: 300,
+                foreword: "前言",
+                text: "內文",
+                epilogue: "結語",
+                createTime: "2022/06/08",
+            },
+            {
+                postId: 6,
+                categoryId: 1,
+                classId: 2,
+                typeId: 2,
+                showOnBoard: true,
+                showOnHome: false,
+                title: "機場搭防疫計程車我們付費，文章標題第二列",
+                image: "https://i.ibb.co/fYBVPpF/image-7.png",
+                viewer: 300,
+                foreword: "前言",
+                text: "內文",
+                epilogue: "結語",
+                createTime: "2022/06/08",
+            },
+            {
+                postId: 7,
+                categoryId: 1,
+                classId: 2,
+                typeId: 3,
+                showOnBoard: true,
+                showOnHome: false,
+                title: "機場搭防疫計程車我們付費，文章標題第二列",
+                image: "https://i.ibb.co/fYBVPpF/image-7.png",
+                viewer: 300,
+                foreword: "前言",
+                text: "內文",
+                epilogue: "結語",
+                createTime: "2022/06/08",
+            },
+            {
+                postId: 8,
+                categoryId: 1,
+                classId: 2,
+                typeId: 4,
+                showOnBoard: true,
+                showOnHome: false,
+                title: "機場搭防疫計程車我們付費，文章標題第二列",
+                image: "https://i.ibb.co/fYBVPpF/image-7.png",
+                viewer: 300,
+                foreword: "前言",
+                text: "內文",
+                epilogue: "結語",
+                createTime: "2022/06/08",
+            },
+
+            {
+                postId: 9,
+                categoryId: 2,
+                classId: 1,
+                typeId: 1,
+                showOnBoard: true,
+                showOnHome: false,
+                title: "機場搭防疫計程車我們付費，文章標題第二列",
+                image: "https://i.ibb.co/fYBVPpF/image-7.png",
+                viewer: 3020,
+                foreword: "前言",
+                text: "內文",
+                epilogue: "結語",
+                createTime: "2022/06/08",
+            },
+            {
+                postId: 10,
+                categoryId: 2,
+                classId: 1,
+                typeId: 2,
+                showOnBoard: true,
+                showOnHome: false,
+                title: "機場搭防疫計程車我們付費，文章標題第二列",
+                image: "https://i.ibb.co/fYBVPpF/image-7.png",
+                viewer: 3030,
+                foreword: "前言",
+                text: "內文",
+                epilogue: "結語",
+                createTime: "2022/06/08",
+            },
+            {
+                postId: 11,
+                categoryId: 2,
+                classId: 1,
+                typeId: 3,
+                showOnBoard: true,
+                showOnHome: false,
+                title: "機場搭防疫計程車我們付費，文章標題第二列",
+                image: "https://i.ibb.co/fYBVPpF/image-7.png",
+                viewer: 300,
+                foreword: "前言",
+                text: "內文",
+                epilogue: "結語",
+                createTime: "2022/06/08",
+            },
+            {
+                postId: 12,
+                categoryId: 2,
+                classId: 1,
+                typeId: 4,
+                showOnBoard: true,
+                showOnHome: false,
+                title: "機場搭防疫計程車我們付費，文章標題第二列",
+                image: "https://i.ibb.co/fYBVPpF/image-7.png",
+                viewer: 300,
+                foreword: "前言",
+                text: "內文",
+                epilogue: "結語",
+                createTime: "2022/06/08",
+            },
+            {
+                postId: 13,
+                categoryId: 2,
+                classId: 2,
+                typeId: 1,
+                showOnBoard: true,
+                showOnHome: false,
+                title: "機場搭防疫計程車我們付費，文章標題第二列",
+                image: "https://i.ibb.co/fYBVPpF/image-7.png",
+                viewer: 300,
+                foreword: "前言",
+                text: "內文",
+                epilogue: "結語",
+                createTime: "2022/06/08",
+            },
+            {
+                postId: 14,
+                categoryId: 2,
+                classId: 2,
+                typeId: 2,
+                showOnBoard: true,
+                showOnHome: false,
+                title: "機場搭防疫計程車我們付費，文章標題第二列",
+                image: "https://i.ibb.co/fYBVPpF/image-7.png",
+                viewer: 300,
+                foreword: "前言",
+                text: "內文",
+                epilogue: "結語",
+                createTime: "2022/06/08",
+            },
+            {
+                postId: 15,
+                categoryId: 2,
+                classId: 2,
+                typeId: 3,
+                showOnBoard: true,
+                showOnHome: false,
+                title: "機場搭防疫計程車我們付費，文章標題第二列",
+                image: "https://i.ibb.co/fYBVPpF/image-7.png",
+                viewer: 300,
+                foreword: "前言",
+                text: "內文",
+                epilogue: "結語",
+                createTime: "2022/06/08",
+            },
+            {
+                postId: 16,
+                categoryId: 2,
+                classId: 2,
+                typeId: 4,
+                showOnBoard: true,
+                showOnHome: false,
+                title: "機場搭防疫計程車我們付費，文章標題第二列",
+                image: "https://i.ibb.co/fYBVPpF/image-7.png",
+                viewer: 300,
+                foreword: "前言",
+                text: "內文",
+                epilogue: "結語",
+                createTime: "2022/06/08",
+            },
+
+
+
+        ]
+    }),
+    getters: {
+        hotPost: (state) => {
+            const showPostCount = 10;
+
+            return getSortByViewerPosts(state.postArray, showPostCount)
+        },
+
+
+        homePosts: (state) => {
+            const showPostCount = 2;
+            return state.postCategoryArray.map(pc => {
+                let postArray: Array<ArticleType> = getCategoryPosts(state.postArray, pc.id)
+                const sohPosts = getShowOnHomePosts(postArray);
+                postArray = sohPosts.length >= showPostCount ? sohPosts.slice(0, 2) : getSortByViewerPosts(postArray, showPostCount)
+                return { ...pc, postArray }
+            })
+        },
+
+        postsByCategory: (state) => {
+            return (categoryId: number) => {
+                if (categoryId == 0) {
+                    return state.postArray
+                }
+                return getCategoryPosts(state.postArray, categoryId)
+            }
+        },
+
+        postById: (state) => {
+            return (postId: number) => {
+                if (postId == 0) {
+                    return {} as ArticleType
+                }
+                return getPost(state.postArray, postId)
+            }
+        },
+
+
+    }
 })
