@@ -17,10 +17,7 @@
                 />
 
                 <q-toolbar-title>
-                    <q-avatar>
-                        <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-                    </q-avatar>
-                    Title
+                    14Holidays
                 </q-toolbar-title>
             </q-toolbar>
         </q-header>
@@ -140,7 +137,7 @@ const toggleLeftDrawer = () => {
 
 
 
-<style scoped>
+<style >
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

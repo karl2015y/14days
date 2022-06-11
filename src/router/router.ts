@@ -33,7 +33,7 @@ const router = createRouter({
     const move2hash: { [key: string]: Boolean } = {
       home: true
     }
-    if (move2hash[to.name as string] && to.name !== from.name) {
+    if (move2hash[to.name as string]) {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           if (to.hash) {
@@ -43,7 +43,7 @@ const router = createRouter({
             })
 
           }
-        }, 800)
+        }, 10)
       })
     }
     return { top: 0 }

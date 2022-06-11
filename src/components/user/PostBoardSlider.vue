@@ -18,8 +18,8 @@
                 <div class="articleSwiper-swiper-slide-wrap">
                     <div class="article-slider-for-item">
                         <div class="articleSwiper-swiper-slide-pic"><img
-                                alt=""
-                                src="https://i.ibb.co/FDS0gHB/Rectangle-1.png"
+                                :alt="post.title"
+                                :src="post.image"
                             >
                         </div>
                         <div class="articleSwiper-swiper-slide-text">

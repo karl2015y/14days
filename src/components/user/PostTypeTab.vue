@@ -2,16 +2,18 @@
     <div>
         <p class="article-class">{{ props.postClassObj.name }}</p>
         <ul class="article-type-title-wrap">
-            <li
-                v-for="item in props.postTypeArray"
-                class="article-type-title "
-                :class="{ 'articleActive': focusPostType == item.name }"
-                @click="focusPostType = item.name"
-            >
-                <div class="article-type-title-box">
-                    <p>{{ item.name }}</p>
-                </div>
-            </li>
+            <template v-for="item in props.postTypeArray">
+                <li
+                    class="article-type-title "
+                    :class="{ 'articleActive': focusPostType == item.name }"
+                    @click="focusPostType = item.name"
+                >
+                    <div class="article-type-title-box">
+                        <p>{{ item.name }}</p>
+                    </div>
+                </li>
+            </template>
+
 
         </ul>
         <ul class="article-class-content">
@@ -28,12 +30,27 @@
                     <div class="article-class-content-item-txt">
                         <p class="article-class-content-item-tab">【{{ focusPostType }}】 </p>
                         <p class="article-class-content-item-tit">{{ item.title }} </p>
-                        <p class="article-class-content-item-subtxt">
-                            <template v-if="item.foreword">{{ item.foreword }}</template>
-                            <template v-else-if="item.text">{{ item.text }}</template>
-                            <template v-else-if="item.epilogue">{{ item.epilogue }}</template>
-                            <template v-else></template>
-                        </p>
+
+                        <template v-if="item.foreword">
+                            <p
+                                class="article-class-content-item-subtxt"
+                                v-html="item.foreword"
+                            />
+                        </template>
+                        <template v-else-if="item.text">
+                            <p
+                                class="article-class-content-item-subtxt"
+                                v-html="item.text"
+                            />
+                        </template>
+                        <template v-else-if="item.epilogue">
+                            <p
+                                class="article-class-content-item-subtxt"
+                                v-html="item.epilogue"
+                            />
+                        </template>
+                        <template v-else></template>
+
                         <p class="article-class-content-item-footer"> <span
                                 class="article-class-content-item-footer-date"
                             >{{ item.createTime }}</span>

@@ -103,7 +103,7 @@ const routes: RouteRecordRaw =
         },  
           {
             name: 'PostEdit',
-            path: 'edit',
+            path: 'edit/:id',
             meta: {
                 title: '編輯文章',
                 icon: 'auto_awesome_mosaic',

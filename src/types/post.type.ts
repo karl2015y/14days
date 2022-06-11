@@ -1,5 +1,6 @@
 
 export type ArticleType = {
+    id?:string,
     postId: number,
     categoryId: number,
     classId: number,
@@ -13,12 +14,31 @@ export type ArticleType = {
     foreword: string,
     text: string,
     epilogue: string,
-
     createTime: string,
+
+    postKeywordArray?: Array<PostKeywordType>
+    similarPostArray?: Array<SimilarPostType>
+    morePostAarray?: Array<MorePostType>
 }
+
+export type PostKeywordType = {
+    id: number,
+    label: string
+    link: string,
+}
+export type SimilarPostType = {
+    id: number,
+    label: string
+    link: string,
+}
+export type MorePostType = {
+    id: number,
+    postId: number,
+}
+
 export type PostCategoryType = {
     id: number,
-    key:string
+    key: string
     name: string,
 };
 export type PostClassType = {
@@ -29,3 +49,10 @@ export type postTypeType = {
     id: number,
     name: string,
 };
+
+
+export type PostSettingType = {
+    postCategoryArray: Array<PostCategoryType>,
+    postClassArray: Array<PostClassType>,
+    postTypeArray: Array<postTypeType>,
+}

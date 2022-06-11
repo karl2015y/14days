@@ -1,6 +1,9 @@
 
 <template>
-
+    <link
+        href="/css/main.css?b55ad1407b3c8749a395"
+        rel="stylesheet"
+    >
     <page-header />
     <router-view />
     <page-footer />

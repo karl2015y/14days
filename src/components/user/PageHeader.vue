@@ -5,7 +5,7 @@
     >
         <div class="content">
             <div class="nav"><a
-                    href="./index.html"
+                    href="/"
                     class="nav_logo"
                 ><img src="https://ppt.cc/fFsAAx@.png"></a>
                 <ul class="nav_list">
@@ -15,7 +15,7 @@
                         class="nav_item"
                     >
                         <template v-if="item.children.length == 0">
-                            <a :href="item.link">{{ item.label }}</a>
+                            <router-link :to="item.link">{{ item.label }}</router-link>
                         </template>
 
                         <template v-else>
@@ -33,10 +33,18 @@
                                 <li
                                     v-for="childItem in item.children"
                                     class="nav_dropdown-menu-item"
-                                ><a
-                                        :href="childItem.link"
+                                >
+
+
+                                    <router-link
+                                        :to="childItem.link"
                                         class="dropdown-item"
-                                    >{{ childItem.label }}</a></li>
+                                    >{{ childItem.label }}</router-link>
+
+
+
+
+                                </li>
                             </ul>
                         </template>
 
@@ -71,10 +79,14 @@
 
                                 <template v-if="item.children.length == 0">
                                     <li class="nav_list_move_item">
-                                        <a
-                                            :href="item.link"
+
+                                        <router-link
+                                            :to="item.link"
                                             class="nav_list_move_item_link"
-                                        >{{ item.label }}</a>
+                                        >
+                                            {{ item.label }}
+                                        </router-link>
+
                                     </li>
 
                                 </template>
@@ -170,10 +182,10 @@ const menuArray = ref([
             }, {
                 label: '桃園防疫旅館',
                 link: '/home#taoyuan',
-            },{
+            }, {
                 label: '新竹防疫旅館',
                 link: '/home#hsinchu',
-            },{
+            }, {
                 label: '台中防疫旅館',
                 link: '/home#taicheng',
             }, {

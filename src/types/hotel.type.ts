@@ -36,3 +36,11 @@ export type hotelFilterType = {
     name: string
     sortingOrder: number
 }
+
+export type CityType = {
+    label: string,
+    name: string,
+    image: string,
+    rooms: Array<hotelDataType>,
+    showMoreThanFourRooms: boolean,
+}

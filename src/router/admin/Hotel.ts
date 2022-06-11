@@ -81,16 +81,7 @@ const routes: RouteRecordRaw =
             },
             component: () => import('@/views/admin/HotelSet.vue'),
         },
-        {
-            name: 'HotelList',
-            path: 'list',
-            meta: {
-                title: '旅館列表',
-                icon: 'auto_awesome_mosaic',
-                showInMenu: true
-            },
-            component: () => import('@/views/admin/HotelList.vue'),
-        },
+       
         
          
 

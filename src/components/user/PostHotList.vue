@@ -6,13 +6,16 @@
                 v-for="(post, index) in postStore.hotPost"
                 class="articleText-right-item"
             >
-                <a
-                    href=""
+
+                <router-link
+                    :to="{ name: 'PostText', params: { id: `${post.postId}` } }"
                     class="articleText-right-item-link"
                 >
                     <span class="articleText-right-item-num">{{ index + 1 }}.</span>
-                    <span class="articleText-right-item-text">{{ post.title }}({{ post.viewer }})</span>
-                </a>
+                    <span class="articleText-right-item-text">{{ post.title }}</span>
+                </router-link>
+
+
             </li>
 
         </ul>

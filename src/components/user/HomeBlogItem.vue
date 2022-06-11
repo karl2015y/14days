@@ -1,10 +1,12 @@
 <template>
-    <div v-if="props.articles.length">
+    <div v-if="props.articles.length>0">
         <div class="blogBigTitle">{{ props.title }}</div>
         <ul class="blogList">
-            <li
+            <template v-for="item in props.articles">
+               <li
+               v-if="item"
                 class="bloItem"
-                v-for="item in props.articles"
+                
             >
                 <img
                     :alt="item.title"
@@ -13,10 +15,25 @@
                 >
                 <p class="blogDate">【{{ item.createTime }}更新】</p>
                 <p class="blogTitle">{{ item.title }}</p>
-                <p
-                    class="blogText"
-                    v-text="item.text"
-                />
+
+                <template v-if="item.foreword">
+                    <p
+                        class="blogText"
+                        v-html="item.foreword"
+                    />
+                </template>
+                <template v-else-if="item.text">
+                    <p
+                        class="blogText"
+                        v-html="item.text"
+                    />
+                </template>
+                <template v-else-if="item.epilogue">
+                    <p
+                        class="blogText"
+                        v-html="item.epilogue"
+                    />
+                </template>
 
                 <router-link
                     :to="{ name: 'PostText', params: { id: `${item.postId}` } }"
@@ -31,6 +48,8 @@
 
             </li>
 
+            </template>
+         
         </ul>
     </div>
 </template>

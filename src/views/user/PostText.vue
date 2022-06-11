@@ -1,7 +1,10 @@
 <template>
     <div id="fb-root"></div>
     <div class="wrap">
-        <div v-if="computedPostDatum" class="content articleText-Wrap">
+        <div
+            v-if="computedPostDatum"
+            class="content articleText-Wrap"
+        >
             <ul class="breadcrumbs">
                 <li class="breadcrumbs-item"><a href="">首頁</a></li>
                 <li class="breadcrumbs-item"><a href="">{{ computedPostDatum.categoryText ?? '' }}</a></li>
@@ -23,6 +26,7 @@
                 <!-- 圖 -->
                 <div class="articleText-pic">
                     <img
+                        class="articleText-pic object-cover"
                         :alt="computedPostDatum.text"
                         :src="computedPostDatum.image"
                     >
@@ -43,14 +47,15 @@
                         class="articleText-subTitle"
                         :style="{ fontSize: addFS + 'em' }"
                     >
-                        <span>{{ computedPostDatum.foreword }}</span>
+                        <p v-html="computedPostDatum.foreword" />
                     </div>
                     <div class="articleText-Text">
                         <span
                             v-if="computedPostDatum.text"
                             :style="{ fontSize: addFS + 'em' }"
                         >
-                            {{ computedPostDatum.text }}
+                            <p v-html="computedPostDatum.text" />
+
                         </span>
                         <br><br>
                         <template v-if="computedPostDatum.epilogue">
@@ -61,7 +66,7 @@
                                 <span class="articleText-Text-line"></span>
                             </div>
                             <span class="articleText-Text-line-text">
-                                {{ computedPostDatum.epilogue }}
+                                <p v-html="computedPostDatum.epilogue" />
                             </span>
                             <div class="articleText-Text-line-wrap">
                                 <span class="articleText-Text-line"></span>
@@ -115,7 +120,7 @@
 
 
                     <!-- 延伸閱讀 -->
-                    <template v-if="morePostAarray.length > 0">
+                    <template v-if="morePostAarray && morePostAarray.length > 0">
                         <div class="article-class article-class-line">延伸閱讀</div>
                         <ul class="articleText-more">
                             <li
@@ -123,8 +128,8 @@
                                 class="articleText-item"
                             >
 
-                                <router-link :to="`${item.id}`">
-                                    {{ item.title }}
+                                <router-link :to="`${item?.postId}`">
+                                    {{ item?.title }}
                                 </router-link>
                             </li>
                         </ul>
@@ -134,8 +139,8 @@
                                 class="activity"
                             >
                                 <img
-                                    :alt="item.title"
-                                    :src="item.mainImage"
+                                    :alt="item?.title"
+                                    :src="item?.image"
                                 />
                             </div>
                         </div>
@@ -151,12 +156,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watch, watchEffect } from 'vue';
 import { useScriptTag } from '@vueuse/core'
 import PostHotList from "@/components/user/PostHotList.vue"
 import { usePostStore } from '@/stores/post.store';
 import { useRoute } from 'vue-router';
 import { ArticleType } from '@/types/post.type';
+import { db } from '@/common/firebase';
+
+
 useScriptTag("https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v14.0")
 const addFS = ref(1.1)
 
@@ -165,8 +173,6 @@ const postStore = usePostStore()
 const route = useRoute()
 
 const postDatum = computed<ArticleType | undefined>(() => (postStore.postById(Number(route.params.id) ?? 0)))
-console.log(postStore.postById(Number(route.params.id) ?? 0));
-
 const computedPostDatum = computed(() => {
     if (postDatum.value) {
         const categoryText = postStore.postCategoryArray.find((item => (item.id == postDatum.value?.categoryId)))?.name
@@ -176,51 +182,32 @@ const computedPostDatum = computed(() => {
     }
 
 })
-
-
-const postKeywordArray = ref([
-    {
-        label: "居家隔離",
-        link: '1'
-    },
-    {
-        label: "自主健康管理",
-        link: '2'
-    },
-    {
-        label: "防疫旅館",
-        link: '3'
-    },
-    {
-        label: "計程車",
-        link: '4'
+watch(() => computedPostDatum.value?.id, (id) => {
+    if (id) {
+        db().collection('Posts').doc(id).update({
+            viewer: db.FieldValue.increment(1)
+        });
     }
-])
+})
 
-const similarPostArray = ref([
-    {
-        label: "居家隔離",
-        link: '1'
-    },
-    {
-        label: "居家檢疫",
-        link: '2'
-    },
-    {
-        label: "自主健康管理防疫旅館懶人包",
-        link: '3'
-    },
-])
 
-const morePostAarray = ref([{
-    id: 1,
-    title: "1機場搭防疫計程車我們付費，文章標題第二列",
-    mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-}, {
-    id: 2,
-    title: "2機場搭防疫計程車我們付費，文章標題第二列",
-    mainImage: "https://i.ibb.co/fYBVPpF/image-7.png",
-},])
+const postKeywordArray = computed(() => {
+    return computedPostDatum.value?.postKeywordArray ?? []
+})
+
+const similarPostArray = computed(() => {
+    return computedPostDatum.value?.similarPostArray ?? []
+})
+
+const morePostAarray = computed(() => {
+    return computedPostDatum.value?.morePostAarray?.map((item: any) => {
+        const post = postStore.postById(item['postId'])
+        if (post) return post;
+    })
+})
+
+
+
 
 </script>
 

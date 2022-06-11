@@ -159,305 +159,59 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref, watchEffect } from 'vue';
 import axios from 'axios'
 import HomeHotCityRoomsLoading from './HomeHotCityRoomsLoading.vue';
 import { useFilter } from '@/composables/filters';
-import { hotelDataType, hotelFilterType } from '@/types/hotel.type';
+import { hotelDataType, hotelFilterType, CityType } from '@/types/hotel.type';
+
+
+import { db } from '@/common/firebase';
+import { useFirestore } from '@vueuse/firebase/useFirestore';
+
+const HotelSettingDB = db().collection('Hotels').doc('Setting');
+const HotelSetting = ref<{ hotCities: {}[], hotelFilterArray: {}[] }>((useFirestore(HotelSettingDB)) as any)
+
 
 const { toLS, formatDate, addDays } = useFilter()
 
-const hotCities = ref([
-    {
-        label: 'taipei',
-        name: '臺北',
-        image: '/assets/index/hot5.jpg',
-        rooms: <Array<hotelDataType>>[],
-        showMoreThanFourRooms: false,
-    },
-    {
-        label: 'newtaipei',
-        name: '新北',
-        image: '/assets/index/hot1.jpg',
-        rooms: <Array<hotelDataType>>[],
-        showMoreThanFourRooms: false,
-    },
-    {
-        label: 'taoyuan',
-        name: '桃園',
-        image: 'https://i.ibb.co/1bmRHdY/Ellipse-19.png',
-        rooms: <Array<hotelDataType>>[],
-        showMoreThanFourRooms: false,
-    },
-    {
-        label: 'hsinchu',
-        name: '新竹',
-        image: 'https://i.ibb.co/9vz5p78/Ellipse-20.png',
-        rooms: <Array<hotelDataType>>[],
-        showMoreThanFourRooms: false,
-    },
-    {
-        label: 'taicheng',
-        name: '臺中',
-        image: 'https://i.ibb.co/C2RyQSs/Ellipse-21.png',
-        rooms: <Array<hotelDataType>>[],
-        showMoreThanFourRooms: false,
-    },
-    {
-        label: 'tainan',
-        name: '臺南',
-        image: 'https://i.ibb.co/NjdRYYM/Ellipse-22.png',
-        rooms: <Array<hotelDataType>>[],
-        showMoreThanFourRooms: false,
-    },
-    {
-        label: 'kaohsiung',
-        name: '高雄',
-        image: 'https://i.ibb.co/Jk5qMys/Ellipse-23.png',
-        rooms: <Array<hotelDataType>>[],
-        showMoreThanFourRooms: false,
-    },
-])
 
-
-const hotelFilterArray = ref<Array<hotelFilterType>>([
-    {
-        "hotelId": "383",
-        "name": "",
-        "sortingOrder": 1
-    },
-    {
-        "hotelId": "156",
-        "name": "",
-        "sortingOrder": 2
-    },
-    {
-        "hotelId": "229",
-        "name": "",
-        "sortingOrder": 3
-    },
-    {
-        "hotelId": "122",
-        "name": "",
-        "sortingOrder": 4
-    },
-    {
-        "hotelId": "263",
-        "name": "",
-        "sortingOrder": 5
-    },
-    {
-        "hotelId": "228",
-        "name": "",
-        "sortingOrder": 6
-    },
-    {
-        "hotelId": "234",
-        "name": "",
-        "sortingOrder": 7
-    },
-    {
-        "hotelId": "108",
-        "name": "",
-        "sortingOrder": 8
-    },
-    {
-        "hotelId": "346",
-        "name": "",
-        "sortingOrder": 9
-    },
-    {
-        "hotelId": "267",
-        "name": "",
-        "sortingOrder": 10
-    },
-    {
-        "hotelId": "86",
-        "name": "",
-        "sortingOrder": 11
-    },
-    {
-        "hotelId": "162",
-        "name": "",
-        "sortingOrder": 12
-    },
-    {
-        "hotelId": "126",
-        "name": "",
-        "sortingOrder": 13
-    },
-    {
-        "hotelId": "348",
-        "name": "台北防疫旅館【Ｗ館】",
-        "sortingOrder": 14
-    },
-    {
-        "hotelId": "320",
-        "name": "台北防疫旅館【J館】",
-        "sortingOrder": 15
-    },
-    {
-        "hotelId": "138",
-        "name": "台北防疫旅館【RII館】",
-        "sortingOrder": 16
-    },
-    {
-        "hotelId": "139",
-        "name": "台北防疫旅館【RIII館】",
-        "sortingOrder": 17
-    },
-    {
-        "hotelId": "140",
-        "name": "台北防疫旅館【RV館】",
-        "sortingOrder": 18
-    },
-    {
-        "hotelId": "236",
-        "name": "新北防疫旅館【Y館】",
-        "sortingOrder": 19
-    },
-    {
-        "hotelId": "431",
-        "name": "",
-        "sortingOrder": 20
-    },
-    {
-        "hotelId": "494",
-        "name": "",
-        "sortingOrder": 21
-    },
-    {
-        "hotelId": "432",
-        "name": "",
-        "sortingOrder": 22
-    },
-    {
-        "hotelId": "427",
-        "name": "",
-        "sortingOrder": 23
-    },
-    {
-        "hotelId": "281",
-        "name": "",
-        "sortingOrder": 24
-    },
-    {
-        "hotelId": "158",
-        "name": "",
-        "sortingOrder": 25
-    },
-    {
-        "hotelId": "204",
-        "name": "",
-        "sortingOrder": 26
-    },
-    {
-        "hotelId": "11",
-        "name": "",
-        "sortingOrder": 27
-    },
-    {
-        "hotelId": "93",
-        "name": "",
-        "sortingOrder": 28
-    },
-    {
-        "hotelId": "57",
-        "name": "",
-        "sortingOrder": 29
-    },
-    {
-        "hotelId": "99",
-        "name": "",
-        "sortingOrder": 30
-    },
-    {
-        "hotelId": "72",
-        "name": "",
-        "sortingOrder": 31
-    },
-    {
-        "hotelId": "306",
-        "name": "",
-        "sortingOrder": 32
-    },
-    {
-        "hotelId": "147",
-        "name": "",
-        "sortingOrder": 33
-    },
-    {
-        "hotelId": "163",
-        "name": "",
-        "sortingOrder": 34
-    },
-    {
-        "hotelId": "203",
-        "name": "",
-        "sortingOrder": 35
-    },
-    {
-        "hotelId": "258",
-        "name": "",
-        "sortingOrder": 36
-    },
-    {
-        "hotelId": "284",
-        "name": "",
-        "sortingOrder": 37
-    },
-    {
-        "hotelId": "134",
-        "name": "",
-        "sortingOrder": 38
-    },
-    {
-        "hotelId": "146",
-        "name": "",
-        "sortingOrder": 39
-    },
-    {
-        "hotelId": "144",
-        "name": "高雄前金區【K館】",
-        "sortingOrder": 40
-    },
-    {
-        "hotelId": "253",
-        "name": "高雄前金區【L館】",
-        "sortingOrder": 41
-    },
-    {
-        "hotelId": "264",
-        "name": "高雄苓雅區【X館】",
-        "sortingOrder": 42
+const hotCities = ref<Array<CityType>>()
+const hotelFilterArray = ref<Array<hotelFilterType>>()
+watchEffect(() => {
+    if (HotelSetting.value) {
+        hotCities.value = HotelSetting.value.hotCities.map(item => ({ rooms: <Array<hotelDataType>>[], showMoreThanFourRooms: false, ...item }) as any)
+        hotelFilterArray.value = HotelSetting.value.hotelFilterArray.map((item: any) => ({ hotelId: item.hotelId, name: item.name, sortingOrder: Number(item.sortingOrder) }) as any)
     }
-])
+})
+
 const loading = ref(true)
 
 const apiUrl = computed(() => {
-    let baseUrl = `https://ota-api.tourbobo.com/ota/hotels?adults=1&children=0&check_in=${formatDate(addDays(30))}&check_out=${formatDate(addDays(38))}`
-    hotelFilterArray.value.forEach(item => {
-        baseUrl += `&hotel_id[]=${item.hotelId}`
-    })
-    return baseUrl
+    let baseUrl = `https://ota-api.tourbobo.com/ota/hotels?per_page=${hotelFilterArray.value?.length}&adults=1&children=0&check_in=${formatDate(addDays(30))}&check_out=${formatDate(addDays(38))}`
+    if (hotelFilterArray.value) {
+        hotelFilterArray.value.forEach(item => {
+            baseUrl += `&hotel_id[]=${item.hotelId}`
+        })
+        return baseUrl
+    }
 })
 
 const getData = async () => {
     loading.value = true
-    console.log(apiUrl.value);
-
+    if (!apiUrl.value) return;
     const response = await axios.get(apiUrl.value)
 
     let _data = response.data.data
 
     _data = _data.map((item: hotelDataType) => {
-        const kf = hotelFilterArray.value.find(hf => hf.hotelId == item.hotel_id)
+        const kf = hotelFilterArray.value?.find(hf => hf.hotelId == item.hotel_id)
         item.sortingOrder = kf?.sortingOrder ?? 99
         // 改名
         item.name = kf?.name ? kf?.name : item.name
         return item
     })
-    hotCities.value.forEach((city => {
+    hotCities.value?.forEach((city => {
         // 按照地區排放
         city.rooms = _data.filter((item: hotelDataType) => (item.county.replaceAll('台', '臺').indexOf(city.name) > -1))
         // 排序
@@ -465,8 +219,15 @@ const getData = async () => {
     }))
     loading.value = false
 }
+
+watchEffect(() => {
+    if (HotelSetting.value) {
+        getData()
+    }
+})
+
 onMounted(() => {
-    getData()
+
     new window.WOW().init();
 })
 
