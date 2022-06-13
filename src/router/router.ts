@@ -43,7 +43,7 @@ const router = createRouter({
             })
 
           }
-        }, 10)
+        }, 100)
       })
     }
     return { top: 0 }

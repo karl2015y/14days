@@ -44,6 +44,7 @@
             row-key="name"
             hide-bottom
             selection="multiple"
+            :rows-per-page-options="[0]"
         >
             <template v-slot:header-selection="scope">
 
@@ -51,7 +52,7 @@
             </template>
             <template v-slot:body-selection="scope">
 
-                <router-link :to="{ name: 'PostEdit', params: { id: scope.row.postId } }">
+                <router-link :to="{ name: 'PostEdit', params: { id: scope.row.firestoreId } }">
                     <q-btn
                         class="ml-1"
                         round
@@ -65,7 +66,7 @@
                 </router-link>
 
                 <q-btn
-                    @click="clickRemovePost(scope.row.id)"
+                    @click="clickRemovePost(scope.row.firestoreId)"
                     class="ml-1"
                     round
                     color="negative"
@@ -94,7 +95,7 @@ const postStore = usePostStore();
 
 const columns = ref([
     { name: 'createTime', label: '建立時間', field: 'createTime' },
-    { name: 'postId', label: '文章編號', field: 'postId' },
+    { name: 'firestoreId', label: '文章編號', field: 'firestoreId' },
     { name: 'title', label: '文章標題', field: 'title' },
     {
         name: 'category', label: '文章種類', field: 'categoryId',

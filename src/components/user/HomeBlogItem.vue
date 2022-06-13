@@ -36,7 +36,7 @@
                 </template>
 
                 <router-link
-                    :to="{ name: 'PostText', params: { id: `${item.postId}` } }"
+                    :to="{ name: 'PostText', params: { id: `${item.firestoreId}` } }"
                     class="blogMore"
                 >
                     <p class="blogMoreText">Read more...</p>

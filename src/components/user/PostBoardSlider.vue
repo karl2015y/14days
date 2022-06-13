@@ -32,7 +32,7 @@
                             </p>
 
                             <router-link
-                                :to="{ name: 'PostText', params: { id: `${post.postId}` } }"
+                                :to="{ name: 'PostText', params: { id: `${post.firestoreId}` } }"
                                 class="articleSwiper-btn"
                             >
                                 閱讀更多</router-link>

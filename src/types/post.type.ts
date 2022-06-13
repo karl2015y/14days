@@ -1,6 +1,6 @@
 
 export type ArticleType = {
-    id?:string,
+    firestoreId?:string,
     postId: number,
     categoryId: number,
     classId: number,
@@ -33,7 +33,7 @@ export type SimilarPostType = {
 }
 export type MorePostType = {
     id: number,
-    postId: number,
+    firestoreId: number,
 }
 
 export type PostCategoryType = {

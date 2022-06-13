@@ -128,7 +128,7 @@
                                 class="articleText-item"
                             >
 
-                                <router-link :to="`${item?.postId}`">
+                                <router-link :to="`${item?.firestoreId}`">
                                     {{ item?.title }}
                                 </router-link>
                             </li>
@@ -172,7 +172,7 @@ const postStore = usePostStore()
 
 const route = useRoute()
 
-const postDatum = computed<ArticleType | undefined>(() => (postStore.postById(Number(route.params.id) ?? 0)))
+const postDatum = computed<ArticleType | undefined>(() => (postStore.postById(String(route.params.id) ?? "")))
 const computedPostDatum = computed(() => {
     if (postDatum.value) {
         const categoryText = postStore.postCategoryArray.find((item => (item.id == postDatum.value?.categoryId)))?.name
@@ -182,7 +182,7 @@ const computedPostDatum = computed(() => {
     }
 
 })
-watch(() => computedPostDatum.value?.id, (id) => {
+watch(() => computedPostDatum.value?.firestoreId, (id) => {
     if (id) {
         db().collection('Posts').doc(id).update({
             viewer: db.FieldValue.increment(1)
@@ -201,7 +201,7 @@ const similarPostArray = computed(() => {
 
 const morePostAarray = computed(() => {
     return computedPostDatum.value?.morePostAarray?.map((item: any) => {
-        const post = postStore.postById(item['postId'])
+        const post = postStore.postById(item['firestoreId'])
         if (post) return post;
     })
 })

@@ -26,7 +26,7 @@ watchEffect(() => {
         postsData.value.splice(postsSettingIndex, 1)
         // console.log(postsData.value.map((item) => ({ id: item.id, ...item })));
         // console.log(postsData.value);
-        postsData.value = (postsData.value as Array<ArticleType>).map((item) => ({ id: item.id, ...item }))
+        postsData.value = (postsData.value as Array<any>).map((item) => ({ firestoreId: item.id, ...item }))
 
         postStore.postArray = <Array<ArticleType>>postsData.value
 

@@ -59,7 +59,7 @@
         <EQSelect
             v-model="formData.morePostAarray"
             name="延伸閱讀"
-            key1-name="postId"
+            key1-name="firestoreId"
             key1-label="文章編號"
         />
         <home-blog-item
@@ -165,7 +165,7 @@ const clickCreate = () => {
 
 const getPostView = (val: any) => {
     return val.map((item: any) => {
-        const post = postStore.postById(item['postId'])
+        const post = postStore.postById(item['firestoreId'])
         console.log(post);
 
         if (post) return post;

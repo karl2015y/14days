@@ -8,7 +8,7 @@
             >
 
                 <router-link
-                    :to="{ name: 'PostText', params: { id: `${post.postId}` } }"
+                    :to="{ name: 'PostText', params: { id: `${post.firestoreId}` } }"
                     class="articleText-right-item-link"
                 >
                     <span class="articleText-right-item-num">{{ index + 1 }}.</span>

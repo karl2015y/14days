@@ -56,7 +56,7 @@
                             >{{ item.createTime }}</span>
 
                             <router-link
-                                :to="{ name: 'PostText', params: { id: `${item.postId}` } }"
+                                :to="{ name: 'PostText', params: { id: `${item.firestoreId}` } }"
                                 class="article-class-content-item-footer-move"
                             >
                                 <span>閱讀更多 </span>

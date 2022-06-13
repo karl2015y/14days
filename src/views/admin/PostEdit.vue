@@ -59,7 +59,7 @@
         <EQSelect
             v-model="formData.morePostAarray"
             name="延伸閱讀"
-            key1-name="postId"
+            key1-name="firestoreId"
             key1-label="文章編號"
         />
         <!-- <home-blog-item
@@ -110,13 +110,14 @@ import { useNotify } from '@/composables/notify';
 
 import HomeBlogItem from '@/components/user/HomeBlogItem.vue';
 import { useRoute } from 'vue-router';
+import { assign } from 'lodash';
 const route = useRoute()
 const postDB = db().collection('Posts');
 const Notify = useNotify()
 const { formatDate } = useFilter()
 const postStore = usePostStore()
 const formDefault = {
-    id: '',
+    firestoreId: '',
     postId: 0,
     categoryId: 0,
     classId: 0,
@@ -149,22 +150,22 @@ watchEffect(() => {
 })
 const resetForm = (form?: ArticleType) => {
     if (form) {
-        formData.value = JSON.parse(JSON.stringify(form))
+        // formData.value = assign(formData.value, form)
+        formData.value = JSON.parse(JSON.stringify(assign(formData.value, form)))
     } else {
         formData.value = JSON.parse(JSON.stringify(formDefault))
     }
 }
 watchEffect(() => {
-    route.params.id
-    const post = postStore.postById(Number(route.params.id))
-    categoryItem.value = postStore.postCategoryArray.find(pc => (pc.id == post?.categoryId))
-    classItem.value = postStore.postClassArray.find(pc => (pc.id == post?.classId))
-    typeItem.value = postStore.postTypeArray.find(pc => (pc.id == post?.typeId))
+    const post = postStore.postById(String(route.params.id))
+    categoryItem.value = postStore.postCategoryArray?.find(pc => (pc.id == post?.categoryId))
+    classItem.value = postStore.postClassArray?.find(pc => (pc.id == post?.classId))
+    typeItem.value = postStore.postTypeArray?.find(pc => (pc.id == post?.typeId))
     resetForm(post)
 })
 const clickSave = () => {
 
-    postDB.doc(formData.value.id).set(formData.value).then(() => {
+    postDB.doc(formData.value.firestoreId).set(formData.value).then(() => {
         Notify.handleSuccess("成功")
     }).catch(error => {
         Notify.handleError("錯誤")
@@ -175,7 +176,7 @@ const clickSave = () => {
 
 const getPostView = (val: any) => {
     return val.map((item: any) => {
-        const post = postStore.postById(item['postId'])
+        const post = postStore.postById(item['firestoreId'])
         console.log(post);
 
         if (post) return post;

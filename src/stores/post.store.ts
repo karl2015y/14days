@@ -2,11 +2,11 @@ import { ArticleType, PostCategoryType, PostClassType, postTypeType } from '@/ty
 import { defineStore } from 'pinia'
 
 
-const getPost = (postArray: Array<ArticleType>, id: number) => {
+const getPost = (postArray: Array<ArticleType>, id: string) => {
     console.log('getPost',id);
     console.log(postArray);
     
-    return postArray.find(((post: ArticleType) => (post.postId == id)))
+    return postArray.find(((post: ArticleType) => (post.firestoreId == id)))
 }
 const getCategoryPosts = (postArray: Array<ArticleType>, id: number) => {
     return postArray.filter(((post: ArticleType) => (post.categoryId === id)))
@@ -337,11 +337,11 @@ export const usePostStore = defineStore('post', {
         },
 
         postById: (state) => {
-            return (postId: number) => {
-                if (postId == 0) {
+            return (firestoreId: string) => {
+                if (!firestoreId) {
                     return {} as ArticleType
                 }
-                return getPost(state.postArray, postId)
+                return getPost(state.postArray, firestoreId)
             }
         },
 
